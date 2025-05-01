@@ -11,6 +11,23 @@ registration:
     - "openid"
 
 endpoints:
+  # ─── OpenAI via assistants ───────────────────────────────────────────────────
+  openAI:
+    # Rend ce provider le provider par défaut
+    default: true
+    # Votre clé OpenAI (doit autoriser l'usage d'assistants)
+    apiKey: ${OPENAI_API_KEY}
+    # Base URL standard pour l'API OpenAI
+    baseURL: https://api.openai.com/v1
+    # Options par défaut de modèle (ici GPT-4, vous pouvez choisir gpt-3.5-turbo, etc.)
+    modelOptions:
+      model: "gpt-4.1-nano-2025-04-14"
+    # Activation des assistants
+    assistants:
+      enabled: true
+      # Liste des IDs de vos assistants OpenAI (remplacez par vos véritables IDs)
+      ids:
+        - asst_G4U6V9ZCDSph2OHTy2FEGmyn
   custom:
     # APIpie
     # https://apipie.ai/dashboard/
