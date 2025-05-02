@@ -6,9 +6,16 @@ cache: true
 # ─── TTS OpenAI ───────────────────────────────────────────────
 speech:
   tts:
-    engine: "openai"
-    model: "tts-1"   # le modèle doit exister côté OpenAI
-    voice: "alloy"
+    openai:            # ← provider explicite
+      apiKey: '${OPENAI_API_KEY}'
+      model: 'tts-1'
+      voices: ['alloy']   # ou la liste complète si tu veux
+  stt:                  # (facultatif) même logique pour la reco vocale
+    openai:
+      apiKey: '${OPENAI_API_KEY}'
+      model: 'whisper-1'
+
+# ──────────────────────────────────────────────────
 
 fileConfig:
   serverFileSizeLimit: 100
