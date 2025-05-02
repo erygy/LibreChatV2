@@ -18,11 +18,7 @@ speech:
       apiKey: '${OPENAI_API_KEY}'
       model: 'whisper-1'
 
-# ─── Persistence (MongoDB) ───────────────────────────────────────
-database:
-  client: "mongodb"
-  connection:
-    uri: "${MONGO_URI}"    # utilise bien ta MONGO_URI d'env
+
 # ──────────────────────────────────────────────────
 
 fileConfig:
