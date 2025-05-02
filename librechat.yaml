@@ -4,7 +4,7 @@ fileStrategy: "local"
 cache: true
 
 balance:
-  enabled: true   # ou false selon ton besoin
+  enabled: false   # ou false selon ton besoin
 
 # ─── TTS OpenAI ───────────────────────────────────────────────
 speech:
