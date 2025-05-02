@@ -7,7 +7,7 @@ cache: true
 speech:
   tts:
     engine: "openai"
-    model: "gpt-4o-mini-tts"   # le modèle doit exister côté OpenAI
+    model: "tts-1"   # le modèle doit exister côté OpenAI
     voice: "alloy"
 
 fileConfig:
@@ -47,6 +47,7 @@ endpoints:
     baseURL: https://api.openai.com/v1
     modelOptions:
       model: "gpt-4o"
+    requireUserKey: true
 
   # ─── Configuration de l’API Assistants ────────────────────────────────────────
   assistants:
