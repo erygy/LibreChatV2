@@ -3,6 +3,13 @@ fileStrategy: "local"
 
 cache: true
 
+# ─── TTS OpenAI ───────────────────────────────────────────────
+speech:
+  tts:
+    engine: "openai"
+    model: "gpt-4o-mini-tts"   # le modèle doit exister côté OpenAI
+    voice: "alloy"
+
 fileConfig:
   serverFileSizeLimit: 100
   avatarSizeLimit: 2
