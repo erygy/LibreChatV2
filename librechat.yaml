@@ -2,6 +2,27 @@ version: 1.2.4
 
 cache: true
 
+fileConfig:
+  serverFileSizeLimit: 100
+  avatarSizeLimit: 2
+  endpoints:
+    default:
+      fileLimit: 5
+      fileSizeLimit: 20
+      totalSizeLimit: 50
+      supportedMimeTypes:
+        - "application/pdf"
+        - "text/.*"
+        - "image/.*"
+    assistants:
+      fileLimit: 5
+      fileSizeLimit: 10
+      totalSizeLimit: 30
+      supportedMimeTypes:
+        - "application/pdf"
+        - "text/.*"
+        - "image/.*"
+
 registration:
   socialLogins:
     - "discord"
