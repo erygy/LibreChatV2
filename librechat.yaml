@@ -3,6 +3,9 @@ fileStrategy: "local"
 
 cache: true
 
+balance:
+  enabled: true   # ou false selon ton besoin
+
 # ─── TTS OpenAI ───────────────────────────────────────────────
 speech:
   tts:
@@ -54,7 +57,7 @@ endpoints:
     baseURL: https://api.openai.com/v1
     modelOptions:
       model: "gpt-4o"
-    requireUserKey: true
+   # requireUserKey: true
 
   # ─── Configuration de l’API Assistants ────────────────────────────────────────
   assistants:
