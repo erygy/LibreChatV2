@@ -6,6 +6,7 @@ balance:
   enabled: false   # ou false selon ton besoin
 
 # ─── TTS OpenAI ───────────────────────────────────────────────
+
 speech:
   tts:
     openai:
@@ -16,10 +17,24 @@ speech:
     openai:
       apiKey: ${OPENAI_API_KEY}
       model: whisper-1
-    speechTab:
-      speechToText:
-        autoSendText: -1
-        preventDoubleSend: true
+  speechTab:
+    conversationMode: true
+    advancedMode: false
+    speechToText:
+      engineSTT: "openai"
+      languageSTT: "French"
+      autoTranscribeAudio: true
+      decibelValue: -45
+      autoSendText: 0
+      preventDoubleSend: true
+    textToSpeech:
+      engineTTS: "openai"
+      voice: "alloy"
+      languageTTS: "fr"
+      automaticPlayback: true
+      playbackRate: 1.0
+      cacheTTS: true
+
 
 # ──────────────────────────────────────────────────
 
