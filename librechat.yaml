@@ -28,42 +28,35 @@ modelSpecs:
     - anthropic
     - groq
   list:
-    - name: "gpt-4o"
-      label: "GPT-4 Omni"
-      preset:
-        endpoint: "openAI"
-        model: "gpt-4o"
-        temperature: 0.7
-
     - name: "o4-mini"
-      label: "GPT o4-mini"
+      label: "GPT o4-mini 4💡 10💸"
       preset:
         endpoint: "openAI"
         model: "o4-mini"
         temperature: 0.7
 
     - name: "o3"
-      label: "GPT o3"
+      label: "GPT o3 5💡 100💸"
       preset:
         endpoint: "openAI"
         model: "o3"
         temperature: 0.7
 
-    - name: "gpt-4.1"
+    - name: "gpt-4.1 4🟢 20💸"
       label: "GPT-4.1"
       preset:
         endpoint: "openAI"
         model: "gpt-4.1"
         temperature: 0.7
 
-    - name: "gpt-4.1-mini"
+    - name: "gpt-4.1-mini 3🟢 3💸"
       label: "GPT-4.1 Mini"
       preset:
         endpoint: "openAI"
         model: "gpt-4.1-mini"
         temperature: 0.7
 
-    - name: "gpt-4.1-nano"
+    - name: "gpt-4.1-nano 2🟢 1💸" 
       label: "GPT-4.1 Nano"
       preset:
         endpoint: "openAI"
