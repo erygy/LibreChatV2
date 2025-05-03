@@ -87,8 +87,8 @@ endpoints:
 
     # Activation explicite des titres pour résoudre le 404
     titleConvo: true              # génère un titre après chaque premier message
-    titleModel: current_model     # réutilise le modèle choisi dans la convo
-    # titleMethod: functions      # (optionnel) GPT‑4o sait gérer les fonctions
+    titleModel: "gpt-3.5-turbo"
+    titleMethod: "completion"
 
     capabilities: [actions, tools, code_interpreter, retrieval]
     modelOptions:
