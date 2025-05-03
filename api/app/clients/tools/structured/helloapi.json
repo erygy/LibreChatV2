@@ -2,8 +2,8 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Hello API",
-    "description": "Retourne un message de salutation",
-    "version": "1.0.0"
+    "description": "Retourne un message de salutation et met en majuscule",
+    "version": "1.0.1"
   },
   "servers": [
     {
@@ -23,9 +23,42 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "message": {
-                      "type": "string"
-                    }
+                    "message": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/uppercase": {
+      "post": {
+        "summary": "uppercaseText",
+        "operationId": "uppercaseText",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "text": { "type": "string" }
+                },
+                "required": ["text"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Texte transformé en majuscules",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": { "type": "string" }
                   }
                 }
               }
