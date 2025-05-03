@@ -21,6 +21,11 @@ speech:
 
 # ──────────────────────────────────────────────────
 
+actions:
+  allowedDomains:
+    - "librechat-production-aed8.up.railway.app"
+
+# ──────────────────────────────────────────────────
 fileConfig:
   serverFileSizeLimit: 100
   avatarSizeLimit: 2
