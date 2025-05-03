@@ -57,6 +57,16 @@ registration:
     - "openid"
 
 endpoints:
+  agents:
+    disableBuilder: false
+    capabilities:
+      - "execute_code"
+      - "file_search"
+      - "actions"
+      - "tools"
+      - "artifacts"
+      - "ocr"
+      - "chain"
   # ─── OpenAI via Assistants ───────────────────────────────────────────────────
   openAI:
     default: true
