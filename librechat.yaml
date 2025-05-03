@@ -17,7 +17,9 @@ speech:
     openai:
       apiKey: '${OPENAI_API_KEY}'
       model: 'whisper-1'
-
+  speechTab:
+    speechToText:
+      autoSendText: -1   # -1 = désactivé (ou mets 800 pour 0,8 s de délai)
 
 # ──────────────────────────────────────────────────
 
