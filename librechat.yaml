@@ -61,7 +61,6 @@ endpoints:
     disableBuilder: false
     allowedProviders:       # si défini, ne proposer que cette liste
       - openAI
-      - assistants 
     capabilities:
       - "execute_code"
       - "file_search"
@@ -75,6 +74,11 @@ endpoints:
     default: true
     apiKey: ${OPENAI_API_KEY}
     baseURL: https://api.openai.com/v1
+    capabilities:
+      - actions
+      - tools
+      - code_interpreter
+      - file_search
     modelOptions:
       model: "gpt-4o"
    # requireUserKey: true
