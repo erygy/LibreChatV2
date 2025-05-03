@@ -2,7 +2,7 @@ version: 1.2.4
 fileStrategy: "local"
 
 cache: true
-
+# ──────────────────────────────────────────────────
 balance:
   enabled: false   # ou false selon ton besoin
 
