@@ -74,6 +74,7 @@ endpoints:
     default: true
     apiKey: ${OPENAI_API_KEY}
     baseURL: https://api.openai.com/v1
+    forcePrompt: true
     capabilities:
       - actions
       - tools
@@ -85,7 +86,7 @@ endpoints:
 
   # ─── Configuration de l’API Assistants ────────────────────────────────────────
   assistants:
-    default: false                 # ou true si vous voulez en faire le provider par défaut
+    default: true                 # ou true si vous voulez en faire le provider par défaut
     supportedIds:
       - gpt-3.5-turbo-0125
       - gpt-4-1106-preview
