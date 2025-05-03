@@ -33,16 +33,16 @@ fileConfig:
   endpoints:
     default:
       fileLimit: 5
-      fileSizeLimit: 20
-      totalSizeLimit: 50
+      fileSizeLimit: 100
+      totalSizeLimit: 100
       supportedMimeTypes:
         - "application/pdf"
         - "text/.*"
         - "image/.*"
     assistants:
       fileLimit: 5
-      fileSizeLimit: 10
-      totalSizeLimit: 30
+      fileSizeLimit: 100
+      totalSizeLimit: 100
       supportedMimeTypes:
         - "application/pdf"
         - "text/.*"
