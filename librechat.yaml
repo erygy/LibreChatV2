@@ -7,34 +7,33 @@ balance:
 
 # ─── TTS & STT OpenAI ──────────────────────────────────────────
 speech:
-  tts:
-    openai:
-      apiKey: ${OPENAI_API_KEY}
-      model: tts-1
-      voices: ['alloy', 'nova', 'onyx']   # ← tableau rétabli
   stt:
     openai:
-      apiKey: ${OPENAI_API_KEY}
-      model: whisper-1
-
-  # Valeurs par défaut du panneau « Speech » pour les utilisateurs
+      apiKey: '${STT_API_KEY}'
+      model: 'whisper-1'
+  tts:
+    openai:
+      apiKey: '${TTS_API_KEY}'
+      model: 'tts-1'
+      voices: ['alloy', 'echo', 'fable', 'onyx', 'nova', 'shimmer']
   speechTab:
     conversationMode: true
     advancedMode: false
     speechToText:
-      engineSTT: "external"               # ← libellé valide
+      engineSTT: "openai"
       languageSTT: "French"
       autoTranscribeAudio: true
       decibelValue: -45
-      autoSendText: 0                    # 0 = envoi immédiat ; mets -1 pour manuel
+      autoSendText: 0
       preventDoubleSend: true
     textToSpeech:
-      engineTTS: "external"               # ← libellé valide
-      voice: "alloy"                      # valeur initiale
+      engineSTT: "openai"
+      voice: "alloy"
       languageTTS: "fr"
       automaticPlayback: true
       playbackRate: 1.0
       cacheTTS: true
+
 
 
 # ──────────────────────────────────────────────────
