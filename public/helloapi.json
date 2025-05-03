@@ -5,6 +5,9 @@
     "description": "Retourne un message de salutation",
     "version": "1.0.0"
   },
+  "servers": [
+    { "url": "https://librechat-production-aed8.up.railway.app" }
+  ],
   "paths": {
     "/hello": {
       "get": {
