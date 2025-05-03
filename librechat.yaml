@@ -61,6 +61,7 @@ endpoints:
     disableBuilder: false
     allowedProviders:       # si défini, ne proposer que cette liste
       - openAI
+      - assistants
     capabilities:
       - "execute_code"
       - "file_search"
