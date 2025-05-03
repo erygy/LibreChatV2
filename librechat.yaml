@@ -78,7 +78,7 @@ endpoints:
       - actions
       - tools
       - code_interpreter
-      - retrieval 
+      - retrieval
     modelOptions:
       model: "gpt-4o"
    # requireUserKey: true
@@ -96,7 +96,6 @@ endpoints:
       - code_interpreter
       - actions
       - tools
-      - code_interpreter
       - retrieval
       - actions
       - image_vision
