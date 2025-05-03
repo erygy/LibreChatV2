@@ -5,6 +5,11 @@ cache: true
 # ──────────────────────────────────────────────────
 balance:
   enabled: false   # ou false selon ton besoin
+# ──────────────────────────────────────────────────
+
+titles:
+  enabled: true
+  model: gpt-3.5-turbo
 
 # ─── TTS OpenAI ───────────────────────────────────────────────
 speech:
@@ -2032,3 +2037,5 @@ endpoints:
       summaryModel: "grok-beta"
       forcePrompt: false
       modelDisplayLabel: "Grok"
+      
+
