@@ -87,17 +87,19 @@ endpoints:
 
   # ─── Configuration de l’API Assistants ────────────────────────────────────────
   assistants:
-    default: true   
-    supportedIds: 
-     - "asst_G4U6V9ZCDSph2OHTy2FEGmyn"
-    run:
-      autoCancel: true        # annule automatiquement les runs précédents
-      maxConcurrent: 1        # interdit plusieurs runs en parallèle
-    capabilities:
-      - code_interpreter
-      - tools
-      - retrieval
-      - actions
+  default: true
+  apiKey: ${ASSISTANTS_API_KEY}
+  baseURL: https://api.openai.com/v1
+  useV2: true
+  supportedIds:
+    - asst_G4U6V9ZCDSph2OHTy2FEGmyn
+  capabilities:
+    - code_interpreter
+    - tools
+    - retrieval
+    - actions
+  run:
+    autoCancel: true
   custom:
     # APIpie
     # https://apipie.ai/dashboard/
