@@ -5,6 +5,11 @@
     "description": "Retourne un message de salutation",
     "version": "1.0.0"
   },
+  "servers": [
+    {
+      "url": "https://hello-api-production-0c25.up.railway.app"
+    }
+  ],
   "paths": {
     "/hello": {
       "get": {
@@ -18,7 +23,9 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "message": { "type": "string" }
+                    "message": {
+                      "type": "string"
+                    }
                   }
                 }
               }
