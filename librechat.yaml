@@ -5,11 +5,6 @@ cache: true
 # ──────────────────────────────────────────────────
 balance:
   enabled: false   # ou false selon ton besoin
-# ──────────────────────────────────────────────────
-
-titles:
-  enabled: true
-  model: gpt-3.5-turbo
 
 # ─── TTS OpenAI ───────────────────────────────────────────────
 speech:
@@ -17,7 +12,7 @@ speech:
     openai:            # ← provider explicite
       apiKey: '${OPENAI_API_KEY}'
       model: 'tts-1'
-      voices: ['alloy']   # ou la liste complète si tu veux
+      voices: ['alloy', 'nova', 'onyx']  # ← ajoute manuellement  # ou la liste complète si tu veux
   stt:                  # (facultatif) même logique pour la reco vocale
     openai:
       apiKey: '${OPENAI_API_KEY}'
