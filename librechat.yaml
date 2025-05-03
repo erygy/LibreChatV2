@@ -34,13 +34,41 @@ modelSpecs:
         endpoint: "openAI"
         model: "gpt-4o"
         temperature: 0.7
-    - name: "gpt-3.5-turbo"
-      label: "GPT-3.5"
+
+    - name: "o4-mini"
+      label: "GPT o4-mini"
       preset:
         endpoint: "openAI"
-        model: "gpt-3.5-turbo"
+        model: "o4-mini"
         temperature: 0.7
 
+    - name: "o3"
+      label: "GPT o3"
+      preset:
+        endpoint: "openAI"
+        model: "o3"
+        temperature: 0.7
+
+    - name: "gpt-4.1"
+      label: "GPT-4.1"
+      preset:
+        endpoint: "openAI"
+        model: "gpt-4.1"
+        temperature: 0.7
+
+    - name: "gpt-4.1-mini"
+      label: "GPT-4.1 Mini"
+      preset:
+        endpoint: "openAI"
+        model: "gpt-4.1-mini"
+        temperature: 0.7
+
+    - name: "gpt-4.1-nano"
+      label: "GPT-4.1 Nano"
+      preset:
+        endpoint: "openAI"
+        model: "gpt-4.1-nano"
+        temperature: 0.7
 
 # ──────────────────────────────────────────────────
 
