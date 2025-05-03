@@ -42,22 +42,22 @@ modelSpecs:
         model: "o3"
         temperature: 0.7
 
-    - name: "gpt-4.1 4🟢 20💸"
-      label: "GPT-4.1"
+    - name: "gpt-4.1"
+      label: "GPT-4.1 4🟢 20💸"
       preset:
         endpoint: "openAI"
         model: "gpt-4.1"
         temperature: 0.7
 
-    - name: "gpt-4.1-mini 3🟢 3💸"
-      label: "GPT-4.1 Mini"
+    - name: "gpt-4.1-mini"
+      label: "GPT-4.1 Mini 3🟢 3💸"
       preset:
         endpoint: "openAI"
         model: "gpt-4.1-mini"
         temperature: 0.7
 
-    - name: "gpt-4.1-nano 2🟢 1💸" 
-      label: "GPT-4.1 Nano"
+    - name: "gpt-4.1-nano"
+      label: "GPT-4.1 Nano 2🟢 1💸"
       preset:
         endpoint: "openAI"
         model: "gpt-4.1-nano"
