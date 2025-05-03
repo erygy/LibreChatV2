@@ -87,14 +87,14 @@ endpoints:
 
   # ─── Configuration de l’API Assistants ────────────────────────────────────────
   assistants:
-    default: true                 # ou true si vous voulez en faire le provider par défaut
+    default: true   
+    supportedIds: 
+     - "asst_G4U6V9ZCDSph2OHTy2FEGmyn"
     capabilities:
       - code_interpreter
-      - actions
       - tools
       - retrieval
       - actions
-      - image_vision
   custom:
     # APIpie
     # https://apipie.ai/dashboard/
