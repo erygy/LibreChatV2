@@ -83,9 +83,14 @@ endpoints:
   assistants:
     # active le constructeur d’assistants dans l’interface
     disableBuilder: false
-    # force l’affichage de vos assistants (ils ne seront disponibles que si leur ID est listé ici)
-    supportedIds:
-      - asst_G4U6V9ZCDSph2OHTy2FEGmyn
+    capabilities:
+      - code_interpreter
+      - file_search
+      - actions
+      - tools
+      - artifacts
+      - ocr
+      - chain
   custom:
     # APIpie
     # https://apipie.ai/dashboard/
