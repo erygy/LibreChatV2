@@ -1,6 +1,5 @@
-version: 1.2.4
+version: 1.2.1           # ← garde la compatibilité officielle
 fileStrategy: "local"
-
 cache: true
 # ──────────────────────────────────────────────────
 balance:
@@ -9,25 +8,25 @@ balance:
 # ─── TTS OpenAI ───────────────────────────────────────────────
 speech:
   tts:
-    openai:            # ← provider explicite
-      apiKey: '${OPENAI_API_KEY}'
-      model: 'tts-1'
-      voices: ['alloy', 'nova', 'onyx']  # ← ajoute manuellement  # ou la liste complète si tu veux
-  stt:                  # (facultatif) même logique pour la reco vocale
     openai:
-      apiKey: '${OPENAI_API_KEY}'
-      model: 'whisper-1'
+      apiKey: ${OPENAI_API_KEY}
+      model: tts-1
+      voices: [alloy, nova, onyx]
+  stt:
+    openai:
+      apiKey: ${OPENAI_API_KEY}
+      model: whisper-1
     speechTab:
       speechToText:
-        autoSendText: -1   # -1 = désactivé (ou mets 800 pour 0,8 s de délai)
+        autoSendText: -1
         preventDoubleSend: true
 
 # ──────────────────────────────────────────────────
 
 actions:
-  allowedDomains:
-    - "librechat-production-aed8.up.railway.app"
-    - "https://hello-api-production-0c25.up.railway.app/"
+  allowedDomains:          # ← seulement le FQDN, sans protocole ni slash
+    - librechat-production-aed8.up.railway.app
+    - hello-api-production-0c25.up.railway.app
 
 # ──────────────────────────────────────────────────
 fileConfig:
@@ -60,33 +59,25 @@ registration:
     - "openid"
 
 endpoints:
-  agents:
+  agents:                  # inchangé
     disableBuilder: false
-    allowedProviders:       # si défini, ne proposer que cette liste
-      - openAI
-      - assistants
-    capabilities:
-      - "execute_code"
-      - "file_search"
-      - "actions"
-      - "tools"
-      - "artifacts"
-      - "ocr"
-      - "chain"
+    allowedProviders: [openAI, assistants]
+    capabilities: [execute_code, file_search, actions, tools, artifacts, ocr, chain]
   # ─── OpenAI via Assistants ───────────────────────────────────────────────────
   openAI:
     default: true
     apiKey: ${OPENAI_API_KEY}
     baseURL: https://api.openai.com/v1
     forcePrompt: true
-    capabilities:
-      - actions
-      - tools
-      - code_interpreter
-      - retrieval
+
+    # Activation explicite des titres pour résoudre le 404
+    titleConvo: true              # génère un titre après chaque premier message
+    titleModel: current_model     # réutilise le modèle choisi dans la convo
+    # titleMethod: functions      # (optionnel) GPT‑4o sait gérer les fonctions
+
+    capabilities: [actions, tools, code_interpreter, retrieval]
     modelOptions:
-      model: "gpt-4o"
-   # requireUserKey: true
+      model: gpt-4o
 
   # ─── Configuration de l’API Assistants ────────────────────────────────────────
   assistants:
@@ -96,11 +87,8 @@ endpoints:
     useV2: true
     supportedIds:
       - asst_G4U6V9ZCDSph2OHTy2FEGmyn
-    capabilities:
-      - code_interpreter
-      - tools
-      - retrieval
-      - actions
+    titleConvo: true           # même logique si tu veux un titre
+    titleModel: current_model
     run:
       autoCancel: true
       waitForPreviousRun: true
