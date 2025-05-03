@@ -24,6 +24,7 @@ speech:
 actions:
   allowedDomains:
     - "librechat-production-aed8.up.railway.app"
+    - "https://hello-api-production-0c25.up.railway.app/"
 
 # ──────────────────────────────────────────────────
 fileConfig:
