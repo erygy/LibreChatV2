@@ -17,6 +17,9 @@ speech:
       model: 'tts-1'
       voices: ['alloy', 'echo', 'fable', 'onyx', 'nova', 'shimmer']
 
+interface:
+  modelSelect: true
+
 
 modelSpecs:
   enforce: true
@@ -58,6 +61,7 @@ modelSpecs:
 
     - name: "gpt-4.1-nano"
       label: "GPT-4.1 Nano 2🟢 1💸"
+      default: true
       preset:
         endpoint: "openAI"
         model: "gpt-4.1-nano"
