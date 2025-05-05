@@ -107,7 +107,8 @@ registration:
     - "openid"
 
 endpoints:
-  agents:                  # inchangé
+  agents:
+    defaultLimit: 1000 
     disableBuilder: false
     allowedProviders: [openAI, assistants]
     capabilities: [execute_code, file_search, actions, tools, artifacts, ocr, chain]
