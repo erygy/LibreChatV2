@@ -270,6 +270,8 @@ const getListAgents = async (searchParameter) => {
     query = { $or: [globalQuery, query] };
   }
   // ─── LOGGING ─────────────────────────────────────────────────────────────
+  console.log('🧪 typeof author:', typeof author);
+  console.log('🧪 typeof author:', typeof author);
   console.log('🔍 [getListAgents] author:', author);
   console.log('🔍 [getListAgents] otherParams:', otherParams);
   console.log('🔍 [getListAgents] final Mongo query:', JSON.stringify(query, null, 2));
