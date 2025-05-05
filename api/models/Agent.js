@@ -274,7 +274,7 @@ const getListAgents = async (searchParameter) => {
   console.log('🔍 [getListAgents] otherParams:', otherParams);
   console.log('🔍 [getListAgents] final Mongo query:', JSON.stringify(query, null, 2));
   // ─
-
+  /*
   const agents = (
     await Agent.find(query, {
       id: 1,
@@ -286,6 +286,10 @@ const getListAgents = async (searchParameter) => {
       description: 1,
       isCollaborative: 1,
     }).lean()
+    const docs = await Agent.find(query).lean();
+      console.log('🔍 [getListAgents] docs.length =', docs.length);
+      console.log('🔍 [getListAgents] ids      =', docs.map(d => d.id));
+
   ).map((agent) => {
     if (agent.author?.toString() !== author) {
       delete agent.author;
@@ -295,6 +299,10 @@ const getListAgents = async (searchParameter) => {
     }
     return agent;
   });
+  */
+  const agents = await Agent.find(query).lean();
+  console.log('📦 Agents bruts sans map :', agents);
+  
 
   const hasMore = agents.length > 0;
   const firstId = agents.length > 0 ? agents[0].id : null;
