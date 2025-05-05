@@ -261,7 +261,15 @@ const deleteAgent = async (searchParameter) => {
 const getListAgents = async (searchParameter) => {
   const { author, ...otherParams } = searchParameter;
 
+  /* La requête let query = Object.assign({ author }, otherParams); ne renvoie pas tous les agents 
+  car elle compare un author en string alors que Mongo attend un ObjectId, 
+  et les deux types ne sont pas équivalents pour une recherche.
   let query = Object.assign({ author }, otherParams);
+  */
+  const { Types } = require('mongoose');
+  let query = Object.assign({ author: Types.ObjectId(author) }, otherParams);
+  
+
 
   const globalProject = await getProjectByName(GLOBAL_PROJECT_NAME, ['agentIds']);
   if (globalProject && (globalProject.agentIds?.length ?? 0) > 0) {
