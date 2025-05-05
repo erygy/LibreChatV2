@@ -18,11 +18,13 @@ speech:
       voices: ['alloy', 'echo', 'fable', 'onyx', 'nova', 'shimmer']
 
 interface:
-  modelSelect: true
+  modelSelect: true    # permet de choisir le modèle
+  presets: true        # affiche la liste de presets
+  parameters: true     # réaffiche le panneau de réglages
 
 
 modelSpecs:
-  enforce: true
+  enforce: false
   addedEndpoints:
     - openAI
     - assistants
