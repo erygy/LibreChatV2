@@ -269,6 +269,11 @@ const getListAgents = async (searchParameter) => {
     delete globalQuery.author;
     query = { $or: [globalQuery, query] };
   }
+  // ─── LOGGING ─────────────────────────────────────────────────────────────
+  console.log('🔍 [getListAgents] author:', author);
+  console.log('🔍 [getListAgents] otherParams:', otherParams);
+  console.log('🔍 [getListAgents] final Mongo query:', JSON.stringify(query, null, 2));
+  // ─
 
   const agents = (
     await Agent.find(query, {
