@@ -262,42 +262,33 @@ const deleteAgent = async (searchParameter) => {
 
 const getListAgents = async (searchParameter) => {
   const { author, ...otherParams } = searchParameter;
-  console.log('🔍 [getListAgents] raw author string:', author);
-
   const { Types } = require('mongoose');
+
+  // 1) Préparer les deux versions de author
   const authorObjectId = new Types.ObjectId(author);
-  console.log('🔍 [getListAgents] authorObjectId (ObjectId):', authorObjectId);
+  console.log('🔍 raw author string:', author);
+  console.log('🔍 authorObjectId (ObjectId):', authorObjectId);
 
-  // 1) Construction de la requête de base
-  let query = Object.assign({ author: authorObjectId }, otherParams);
-  console.log('🔍 [getListAgents] initial Mongo query:', JSON.stringify(query, null, 2));
-
-  // 2) Si projet global, on enrichit le query
-  const globalProject = await getProjectByName(GLOBAL_PROJECT_NAME, ['agentIds']);
-  console.log('🔍 [getListAgents] globalProject.agentIds:', globalProject?.agentIds);
-  if (globalProject?.agentIds?.length > 0) {
-    const globalQuery = { id: { $in: globalProject.agentIds }, ...otherParams };
-    console.log('🔍 [getListAgents] globalQuery before delete author:', JSON.stringify(globalQuery, null, 2));
-    delete globalQuery.author;
-    query = { $or: [globalQuery, query] };
-    console.log('🔍 [getListAgents] combined Mongo query:', JSON.stringify(query, null, 2));
-  }
+  // 2) Construire un OR pour couvrir string OU ObjectId
+  let query = {
+    $or: [
+      { author: authorObjectId },
+      { author: author }
+    ],
+    ...otherParams
+  };
+  console.log('🔍 [getListAgents] final Mongo query:', JSON.stringify(query, null, 2));
 
   // 3) Fetch brut pour debug
   const docs = await Agent.find(query).lean();
-  console.log('🔍 [getListAgents] docs.length =', docs.length);
-  console.log('🔍 [getListAgents] docs IDs    =', docs.map(d => d.id));
+  console.log('🔍 docs.length =', docs.length);
+  console.log('🔍 docs IDs    =', docs.map(d => d.id));
 
   // 4) Projection & format final
   const agents = docs.map((agent) => {
-    console.log(`🔍 [getListAgents] mapping agent id=${agent.id}, raw author=`, agent.author);
-    if (agent.author?.toString() !== author) {
-      console.log(`    → [getListAgents] delete author on agent ${agent.id}`);
-      delete agent.author;
-    } else {
-      agent.author = agent.author.toString();
-    }
-    const formatted = {
+    // uniformiser author en string
+    if (agent.author) agent.author = agent.author.toString();
+    return {
       id: agent.id,
       name: agent.name,
       avatar: agent.avatar,
@@ -306,11 +297,9 @@ const getListAgents = async (searchParameter) => {
       description: agent.description,
       isCollaborative: agent.isCollaborative,
     };
-    console.log(`    → [getListAgents] formatted agent:`, formatted);
-    return formatted;
   });
 
-  console.log('🔍 [getListAgents] final agents array:', agents.map(a => a.id));
+  console.log('🔍 final agents array:', agents.map(a => a.id));
 
   return {
     data: agents,
@@ -319,6 +308,7 @@ const getListAgents = async (searchParameter) => {
     last_id: agents.at(-1)?.id || null,
   };
 };
+
 
 
 
