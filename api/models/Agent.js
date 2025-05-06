@@ -267,7 +267,8 @@ const getListAgents = async (searchParameter) => {
   let query = Object.assign({ author }, otherParams);
   */
   const { Types } = require('mongoose');
-  let query = Object.assign({ author: Types.ObjectId(author) }, otherParams);
+  let query = Object.assign({ author: new Types.ObjectId(author) }, otherParams);
+
   
 
 
