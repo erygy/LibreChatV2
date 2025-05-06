@@ -270,6 +270,14 @@ const getListAgents = async (searchParameter) => {
   console.log('🔍 [getListAgents] docs.length (should be total agents) =', docs.length);
   console.log('🔍 [getListAgents] docs IDs =', docs.map(d => d.id));
 
+  // 2) Pour chaque doc, log son id ET son author tel qu’il est en base
+  docs.forEach(d => {
+    console.log(
+      `– doc id=${d.id}    author type=${typeof d.author}    author value=`,
+      d.author,
+    );
+  });
+
   // Projection + format (on garde la même logique qu’avant)
   const agents = docs.map(agent => ({
     id: agent.id,
