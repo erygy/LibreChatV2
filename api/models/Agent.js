@@ -261,45 +261,26 @@ const deleteAgent = async (searchParameter) => {
 
 
 const getListAgents = async (searchParameter) => {
-  const { author, ...otherParams } = searchParameter;
-  const { Types } = require('mongoose');
+  // ON IGNORE COMPLETEMENT LE FILTRE SUR L'AUTEUR
+  const query = {};            
+  console.log('🔍 [getListAgents] using empty query to fetch ALL agents');
 
-  // 1) Préparer les deux versions de author
-  const authorObjectId = new Types.ObjectId(author);
-  console.log('🔍 raw author string:', author);
-  console.log('🔍 authorObjectId (ObjectId):', authorObjectId);
-
-  // 2) Construire un OR pour couvrir string OU ObjectId
-  let query = {
-    $or: [
-      { author: authorObjectId },
-      { author: author }
-    ],
-    ...otherParams
-  };
-  console.log('🔍 [getListAgents] final Mongo query:', JSON.stringify(query, null, 2));
-
-  // 3) Fetch brut pour debug
+  // Fetch brut
   const docs = await Agent.find(query).lean();
-  console.log('🔍 docs.length =', docs.length);
-  console.log('🔍 docs IDs    =', docs.map(d => d.id));
+  console.log('🔍 [getListAgents] docs.length (should be total agents) =', docs.length);
+  console.log('🔍 [getListAgents] docs IDs =', docs.map(d => d.id));
 
-  // 4) Projection & format final
-  const agents = docs.map((agent) => {
-    // uniformiser author en string
-    if (agent.author) agent.author = agent.author.toString();
-    return {
-      id: agent.id,
-      name: agent.name,
-      avatar: agent.avatar,
-      author: agent.author,
-      projectIds: agent.projectIds,
-      description: agent.description,
-      isCollaborative: agent.isCollaborative,
-    };
-  });
-
-  console.log('🔍 final agents array:', agents.map(a => a.id));
+  // Projection + format (on garde la même logique qu’avant)
+  const agents = docs.map(agent => ({
+    id: agent.id,
+    name: agent.name,
+    avatar: agent.avatar,
+    author: agent.author?.toString(),
+    projectIds: agent.projectIds,
+    description: agent.description,
+    isCollaborative: agent.isCollaborative,
+  }));
+  console.log('🔍 [getListAgents] final agents array =', agents.map(a => a.id));
 
   return {
     data: agents,
@@ -308,6 +289,7 @@ const getListAgents = async (searchParameter) => {
     last_id: agents.at(-1)?.id || null,
   };
 };
+
 
 
 
