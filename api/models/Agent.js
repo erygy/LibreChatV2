@@ -258,74 +258,54 @@ const deleteAgent = async (searchParameter) => {
  * @param {string} searchParameter.author - The user ID of the agent's author.
  * @returns {Promise<Object>} A promise that resolves to an object containing the agents data and pagination info.
  */
+
+
 const getListAgents = async (searchParameter) => {
   const { author, ...otherParams } = searchParameter;
-
-  /* La requête let query = Object.assign({ author }, otherParams); ne renvoie pas tous les agents 
-  car elle compare un author en string alors que Mongo attend un ObjectId, 
-  et les deux types ne sont pas équivalents pour une recherche.
-  let query = Object.assign({ author }, otherParams);
-  */
   const { Types } = require('mongoose');
-  let query = Object.assign({ author: new Types.ObjectId(author) }, otherParams);
 
-  
+  // Convertir l'author en ObjectId pour que Mongo matche bien
+  const authorObjectId = new Types.ObjectId(author);
+  let query = Object.assign({ author: authorObjectId }, otherParams);
 
-
+  // Gestion du GLOBAL_PROJECT_NAME si besoin
   const globalProject = await getProjectByName(GLOBAL_PROJECT_NAME, ['agentIds']);
-  if (globalProject && (globalProject.agentIds?.length ?? 0) > 0) {
+  if (globalProject?.agentIds?.length > 0) {
     const globalQuery = { id: { $in: globalProject.agentIds }, ...otherParams };
     delete globalQuery.author;
     query = { $or: [globalQuery, query] };
   }
-  // ─── LOGGING ─────────────────────────────────────────────────────────────
-  console.log('🧪 typeof author:', typeof author);
-  console.log('🧪 typeof author:', typeof author);
-  console.log('🔍 [getListAgents] author:', author);
-  console.log('🔍 [getListAgents] otherParams:', otherParams);
-  console.log('🔍 [getListAgents] final Mongo query:', JSON.stringify(query, null, 2));
-  // ─
-  /*
-  const agents = (
-    await Agent.find(query, {
-      id: 1,
-      _id: 0,
-      name: 1,
-      avatar: 1,
-      author: 1,
-      projectIds: 1,
-      description: 1,
-      isCollaborative: 1,
-    }).lean()
-    const docs = await Agent.find(query).lean();
-      console.log('🔍 [getListAgents] docs.length =', docs.length);
-      console.log('🔍 [getListAgents] ids      =', docs.map(d => d.id));
 
-  ).map((agent) => {
-    if (agent.author?.toString() !== author) {
-      delete agent.author;
-    }
-    if (agent.author) {
-      agent.author = agent.author.toString();
-    }
-    return agent;
-  });
-  */
-  const agents = await Agent.find(query).lean();
-  console.log('📦 Agents bruts sans map :', agents);
-  
+  // Debug temporaire : vérifiez bien que docs.length vaut 3
+  const docs = await Agent.find(query).lean();
+  console.log('🔍 [getListAgents] docs.length =', docs.length);
+  console.log('🔍 [getListAgents] ids      =', docs.map(d => d.id));
 
-  const hasMore = agents.length > 0;
-  const firstId = agents.length > 0 ? agents[0].id : null;
-  const lastId = agents.length > 0 ? agents[agents.length - 1].id : null;
+  // Projection + format final
+  const agents = docs
+    .map((agent) => {
+      // Supprime author si ce n'est pas le bon type ou qu'on ne veut pas l'exposer
+      if (agent.author?.toString() !== author) delete agent.author;
+      else agent.author = agent.author.toString();
+      return {
+        id: agent.id,
+        name: agent.name,
+        avatar: agent.avatar,
+        author: agent.author,
+        projectIds: agent.projectIds,
+        description: agent.description,
+        isCollaborative: agent.isCollaborative,
+      };
+    });
 
   return {
     data: agents,
-    has_more: hasMore,
-    first_id: firstId,
-    last_id: lastId,
+    has_more: agents.length > 0,
+    first_id: agents[0]?.id || null,
+    last_id: agents.at(-1)?.id || null,
   };
 };
+
 
 /**
  * Updates the projects associated with an agent, adding and removing project IDs as specified.
