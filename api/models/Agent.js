@@ -261,52 +261,32 @@ const deleteAgent = async (searchParameter) => {
 
 
 const getListAgents = async (searchParameter) => {
-  const { author, ...otherParams } = searchParameter;
-  const { Types } = require('mongoose');
+  // ON IGNORE COMPLETEMENT LE FILTRE SUR L'AUTEUR
+  const query = {};            
+  console.log('🔍 [getListAgents] using empty query to fetch ALL agents');
 
-  // Convertit l’author en ObjectId pour matcher les deux formats
-  const authorObjectId = new Types.ObjectId(author);
-
-  // 1) Construction du filtre de base : on prend
-  //    • les agents dont author === ObjectId(author)
-  //    • ou author === author (string)
-  //    • ou ceux dont author est absent (pour ne pas exclure les docs corrompus)
-  let query = {
-    $or: [
-      { author: authorObjectId },
-      { author: author },
-      { author: { $exists: false } }
-    ],
-    ...otherParams
-  };
-
-  // 2) Si on a un project global défini, on l’inclut également
-  const globalProject = await getProjectByName(GLOBAL_PROJECT_NAME, ['agentIds']);
-  if (globalProject?.agentIds?.length > 0) {
-    const globalQuery = { id: { $in: globalProject.agentIds }, ...otherParams };
-    delete globalQuery.author;
-    query = { $or: [ globalQuery, query ] };
-  }
-
-  // 3) On récupère brut pour pouvoir paginer / debugger aisément
+  // Fetch brut
   const docs = await Agent.find(query).lean();
+  console.log('🔍 [getListAgents] docs.length (should be total agents) =', docs.length);
+  console.log('🔍 [getListAgents] docs IDs =', docs.map(d => d.id));
 
-  // 4) On projette et formate la sortie
+  // Projection + format (on garde la même logique qu’avant)
   const agents = docs.map(agent => ({
     id: agent.id,
     name: agent.name,
     avatar: agent.avatar,
-    author: agent.author?.toString() || null,
+    author: agent.author?.toString(),
     projectIds: agent.projectIds,
     description: agent.description,
-    isCollaborative: agent.isCollaborative
+    isCollaborative: agent.isCollaborative,
   }));
+  console.log('🔍 [getListAgents] final agents array =', agents.map(a => a.id));
 
   return {
     data: agents,
     has_more: agents.length > 0,
     first_id: agents[0]?.id || null,
-    last_id: agents.at(-1)?.id || null
+    last_id: agents.at(-1)?.id || null,
   };
 };
 
