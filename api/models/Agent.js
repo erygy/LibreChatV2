@@ -262,64 +262,54 @@ const deleteAgent = async (searchParameter) => {
 
 const getListAgents = async (searchParameter) => {
   const { author, ...otherParams } = searchParameter;
-  console.log('🔍 [getListAgents] raw author string:', author);
-
   const { Types } = require('mongoose');
-  const authorObjectId = new Types.ObjectId(author);
-  console.log('🔍 [getListAgents] authorObjectId (ObjectId):', authorObjectId);
 
-  // ─── on cherche tant les documents dont author est un ObjectId
-  //     que ceux où author a été stocké en string ───────────────────────
+  // Convertit l’author en ObjectId pour matcher les deux formats
+  const authorObjectId = new Types.ObjectId(author);
+
+  // 1) Construction du filtre de base : on prend
+  //    • les agents dont author === ObjectId(author)
+  //    • ou author === author (string)
+  //    • ou ceux dont author est absent (pour ne pas exclure les docs corrompus)
   let query = {
     $or: [
       { author: authorObjectId },
-      { author: author }
+      { author: author },
+      { author: { $exists: false } }
     ],
     ...otherParams
   };
-  console.log('🔍 [getListAgents] Mongo query:', JSON.stringify(query, null, 2));
 
-  // ─── gestion du GLOBAL_PROJECT_NAME si nécessaire ───────────────────
+  // 2) Si on a un project global défini, on l’inclut également
   const globalProject = await getProjectByName(GLOBAL_PROJECT_NAME, ['agentIds']);
-  console.log('🔍 [getListAgents] globalProject.agentIds:', globalProject?.agentIds);
   if (globalProject?.agentIds?.length > 0) {
     const globalQuery = { id: { $in: globalProject.agentIds }, ...otherParams };
     delete globalQuery.author;
     query = { $or: [ globalQuery, query ] };
-    console.log('🔍 [getListAgents] combined query with globalProject:', JSON.stringify(query, null, 2));
   }
 
-  // ─── 1) Fetch brut pour vérifier qu’on attrape bien TOUT ─────────────
+  // 3) On récupère brut pour pouvoir paginer / debugger aisément
   const docs = await Agent.find(query).lean();
-  console.log('🔍 [getListAgents] docs.length =', docs.length);
-  console.log('🔍 [getListAgents] docs IDs    =', docs.map(d => d.id));
 
-  // ─── 2) Projection + format de sortie ──────────────────────────────
-  const agents = docs.map((agent) => {
-    console.log(`🔍 [getListAgents] mapping agent id=${agent.id}, raw author=`, agent.author);
-    agent.author = agent.author?.toString();  // uniformiser en string
-    const formatted = {
-      id: agent.id,
-      name: agent.name,
-      avatar: agent.avatar,
-      author: agent.author,
-      projectIds: agent.projectIds,
-      description: agent.description,
-      isCollaborative: agent.isCollaborative,
-    };
-    console.log(`    → formatted agent:`, formatted);
-    return formatted;
-  });
-
-  console.log('🔍 [getListAgents] final agents array:', agents.map(a => a.id));
+  // 4) On projette et formate la sortie
+  const agents = docs.map(agent => ({
+    id: agent.id,
+    name: agent.name,
+    avatar: agent.avatar,
+    author: agent.author?.toString() || null,
+    projectIds: agent.projectIds,
+    description: agent.description,
+    isCollaborative: agent.isCollaborative
+  }));
 
   return {
     data: agents,
     has_more: agents.length > 0,
     first_id: agents[0]?.id || null,
-    last_id: agents.at(-1)?.id || null,
+    last_id: agents.at(-1)?.id || null
   };
 };
+
 
 
 
