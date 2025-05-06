@@ -321,6 +321,7 @@ const getListAgents = async (searchParameter) => {
 };
 
 
+
 /**
  * Updates the projects associated with an agent, adding and removing project IDs as specified.
  * This function also updates the corresponding projects to include or exclude the agent ID.
